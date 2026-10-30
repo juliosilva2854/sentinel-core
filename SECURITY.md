@@ -11,4 +11,4 @@ Use this section to tell people about which versions of your project are current
 ## Reporting a Vulnerability
 Please do not report security vulnerabilities through public GitHub issues.
 
-Instead, please send an email to [SEU_EMAIL_AQUI]. You should receive a response within 48 hours. If for some reason you do not, please follow up via email to ensure we received your original message.
+Instead, please send an email to. You should receive a response within 48 hours. If for some reason you do not, please follow up via email to ensure we received your original message.
