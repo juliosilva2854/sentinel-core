@@ -1,22 +1,32 @@
 #!/bin/bash
 
-# --- Variáveis ---
+# --- Variáveis de Cores ANSI ---
+VERDE='\033[0;32m'
+AZUL='\033[0;34m'
+NC='\033[0m' # Sem Cor
+
+# --- Variáveis do Backup ---
 DATA=$(date +%Y-%m-%d_%H-%M)
-ARQUIVO_BACKUP="backup_sentinel_$DATA.tar.gz"
-DIRETORIO_ALVO="/etc /var/www /home/compartilhado" # Pastas a serem salvas
-SENHA_GPG="SenhaForteParaOBackup123" # Em produção, use variáveis de ambiente
+NOME_ARQUIVO="backup_sentinel_$DATA.tar.gz"
+DIRETORIO_ALVO="/srv/sentinel" # Onde estão as pastas do RH e Financeiro
+SENHA_GPG="SenhaSuperSecretaDoBackup2026" # Em produção, use uma variável de ambiente!
 
-echo "🔄 Iniciando rotina de backup..."
+echo -e "${AZUL}[ i ] Iniciando rotina de backup criptografado...${NC}"
 
-# 1. Compacta os arquivos
-tar -czf /tmp/$ARQUIVO_BACKUP $DIRETORIO_ALVO 2>/dev/null
+# 1. Compacta a pasta
+echo -e "${AZUL}[ i ] Compactando a pasta /srv/sentinel...${NC}"
+sudo tar -czf /tmp/$NOME_ARQUIVO $DIRETORIO_ALVO 2>/dev/null
 
-# 2. Criptografa o arquivo (Simula backup seguro contra Ransomware)
-gpg --batch --yes --passphrase "$SENHA_GPG" -c /tmp/$ARQUIVO_BACKUP
+# 2. Criptografa o arquivo com GPG (Simula proteção contra Ransomware)
+echo -e "${AZUL}[ i ] Criptografando o arquivo com GPG...${NC}"
+sudo gpg --batch --yes --passphrase "$SENHA_GPG" -c /tmp/$NOME_ARQUIVO
 
-# 3. Remove o arquivo não criptografado (segurança)
-rm /tmp/$ARQUIVO_BACKUP
+# 3. Remove o arquivo não criptografado (Segurança)
+sudo rm /tmp/$NOME_ARQUIVO
 
-echo "✅ Backup concluído: /tmp/${ARQUIVO_BACKUP}.gpg"
-echo "📤 (Simulação) Enviando para a nuvem via Rclone..."
-# rclone copy /tmp/${ARQUIVO_BACKUP}.gpg remote:backups/
+echo -e "${VERDE}[ ✔ ] Backup concluído com sucesso!${NC}"
+echo -e "${VERDE}[ ✔ ] Arquivo gerado: /tmp/${NOME_ARQUIVO}.gpg${NC}"
+
+# Simulação de envio para a nuvem (Rclone)
+echo -e "${AZUL}[ i ] (Simulação) Enviando para a nuvem via Rclone...${NC}"
+# rclone copy /tmp/${NOME_ARQUIVO}.gpg remote:backups/

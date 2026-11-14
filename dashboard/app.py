@@ -1,3 +1,9 @@
+from flask import Flask, render_template_string
+import psutil
+
+app = Flask(__name__)
+
+HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,4 +57,15 @@
         createChart('diskChart', {{ disk }}, '#f87171');
     </script>
 </body>
-</html>b
+</html>
+"""
+
+@app.route('/')
+def home():
+    cpu = psutil.cpu_percent()
+    ram = psutil.virtual_memory().percent
+    disk = psutil.disk_usage('/').percent
+    return render_template_string(HTML_TEMPLATE, cpu=cpu, ram=ram, disk=disk)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
