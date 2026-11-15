@@ -22,13 +22,14 @@ O **Sentinel Core** é um laboratório de infraestrutura corporativa focado em *
 
 ```mermaid
 graph TD
-    A[Atacante / Windows] -->|SSH Brute Force| B(Firewall UFW)
-    B -->|Bloqueado| C{Fail2ban}
-    C -->|Bane IP| D[Ubuntu Server 22.04]
-    E[Administrador] -->|Chave SSH / Porta 2222| D
-    D --> F[Dashboard Flask / SIEM]
-    D --> G[Pastas Samba / ACLs]
-    D --> H[Backup Criptografado GPG]
+    A["Atacante"] -->|"Ataque SSH"| B["Firewall UFW"]
+    B -->|"Bloqueado"| C["Fail2ban"]
+    C -->|"Bane IP"| D["Ubuntu Server"]
+    E["Administrador"] -->|"Acesso Seguro"| D
+    D --> F["Dashboard Web"]
+    D --> G["Pastas Samba"]
+    D --> H["Backup GPG"]
+
 📂 Estrutura do Repositório
 text
 sentinel-core/
