@@ -1,42 +1,65 @@
-# 🛡️ Sentinel Core - Secure Infrastructure & DevSecOps Lab
+# 🛡️ Sentinel Core - Enterprise SIEM & DevSecOps Lab
 
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Shell Script](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
+![Bash](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
 ![Security](https://img.shields.io/badge/Security-Hardening-red?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Em_Desenvolvimento-yellow?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
-O **Sentinel Core** é um laboratório de infraestrutura corporativa focado em **DevSecOps**, automação e segurança defensiva. O projeto simula a implantação de um servidor Linux (Ubuntu Server) blindado, com serviços de rede essenciais e monitoramento centralizado via Web e ChatOps.
+O **Sentinel Core** é um laboratório de infraestrutura corporativa focado em **DevSecOps**, automação e segurança defensiva. O projeto simula a implantação de um servidor Linux (Ubuntu Server) blindado, atuando como um SIEM (Security Information and Event Management) para monitoramento de ameaças em tempo real.
 
-## 🎯 Objetivos do Projeto
-- **Hardening:** Aplicação de CIS Benchmarks (SSH, Firewall UFW).
-- **Defesa Ativa:** Fail2ban, monitoramento de integridade (AIDE) e antivírus (ClamAV).
-- **Automação:** Instalação e configuração via scripts Bash idempotentes e Docker.
-- **Observabilidade:** Dashboard interativo em Python/Flask e alertas em tempo real no Telegram.
+## 🚀 Funcionalidades Principais
 
-## 🏗️ Arquitetura e Stack Tecnológica
-- **Sistema Operacional:** Ubuntu Server 22.04 LTS
-- **Serviços de Rede:** Samba 4 (AD DC), DNS/DHCP (dnsmasq)
-- **Segurança:** UFW, Fail2ban, ClamAV, AIDE, Lynis, Trivy
-- **Aplicações:** Python (Flask, psutil), Docker, Docker Compose
-- **Integrações:** Telegram API, Rclone (Backup Criptografado)
+- **SOC Dashboard (Web):** Painel interativo em Python/Flask com métricas de CPU, RAM, Rede, Top Processos e Terminal de Logs em tempo real.
+- **Hardening (CIS Benchmarks):** SSH restrito a chaves (porta 2222), bloqueio de root, Firewall UFW (Default Deny).
+- **Defesa Ativa (IPS):** Fail2ban configurado para banir IPs após tentativas de força bruta.
+- **Compartilhamento Seguro (Samba):** Estrutura de arquivos com Access-Based Enumeration (ABE) e permissões rigorosas (RH vs Financeiro).
+- **Disaster Recovery:** Rotina de backup compactada e criptografada com GPG, e script de restauração em 1 comando.
+- **Antivírus (ClamAV):** Proteção em tempo real na pasta compartilhada (com teste EICAR validado).
 
-## 📂 Estrutura do Repositório
-```text
+## 🏗️ Arquitetura do Projeto
+
+```mermaid
+graph TD
+    A[Atacante / Windows 11] -->|SSH Brute Force| B(Firewall UFW)
+    B -->|Bloqueado| C{Fail2ban}
+    C -->|Bane IP| D[Ubuntu Server 22.04]
+    E[Administrador] -->|Chave SSH / Porta 2222| D
+    D --> F[Dashboard Flask / SIEM]
+    D --> G[Pastas Samba / ACLs]
+    D --> H[Backup Criptografado GPG]
+📂 Estrutura do Repositório
+text
 sentinel-core/
-├── scripts/       # Scripts Bash de automação e Hardening
-├── configs/       # Arquivos de configuração (sshd_config, jail.local, etc.)
-├── dashboard/     # Aplicação Web (Flask) para gestão e monitoramento
-├── bot/           # Bot de Telegram (ChatOps e Alertas)
-├── docs/          # Documentação, Topologia e Matriz de Riscos
-└── docker-compose.yml
+├── scripts/       # Automação Bash (Hardening, Backup, Restore)
+├── dashboard/     # Aplicação Web (Flask, Chart.js, HTML/CSS)
+├── configs/       # Arquivos de configuração (sshd_config, jail.local, smb.conf)
+├── docs/          # Documentação e Diagramas
+└── .github/       # CI/CD (GitHub Actions)
+⚙️ Como Executar a Automação
+Clone o repositório:
 
-🚀 Como Iniciar (Futuro)
-(Instruções de deploy serão adicionadas na conclusão da fase de scripts)
+bash
+git clone https://github.com/juliosilva2854/sentinel-core.git
+cd sentinel-core
+Dê permissão de execução aos scripts:
 
-Clone o repositório.
+bash
+chmod +x scripts/*.sh
+Execute o instalador mestre (como root):
 
-Execute o instalador mestre: sudo ./scripts/install.sh.
+bash
+sudo ./scripts/install.sh
+Inicie o Dashboard (via Systemd):
 
-Autor: Julio Cesar - LinkedIn | GitHub
+bash
+sudo systemctl start sentinel-dashboard
+👨‍💻 Autor
+Julio Cesar
+
+LinkedIn
+
+GitHub
+
+Projeto desenvolvido para a disciplina de Sistemas Operacionais de Redes - UNINOVE.
