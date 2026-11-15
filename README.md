@@ -20,7 +20,7 @@ O **Sentinel Core** é um laboratório de infraestrutura corporativa focado em *
 
 ## 🏗️ Arquitetura do Projeto
 
-```mermaid
+```mermaid```
 graph TD
     A["Atacante"] -->|"Ataque SSH"| B["Firewall UFW"]
     B -->|"Bloqueado"| C["Fail2ban"]
